@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title></title>  
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>  
+    </head>
+
+    <body>
+
+        <form id="form02">
+
+            <label>Name:<input type="text" name="name" required></label>
+            </br>
+        
+            <label>Email Address:<input type="email" name="email" required></label>
+            </br>
+                    
+            </br>
+            <button type="submit">Write to file</button>
+        </form> 
+
+        <div id="result"><h4></h4></div>
+
+        <script type="text/javascript">
+            (function ($) {
+                function form_handle(e) {
+                    $.ajax({
+                        url: 'filewrite.php',
+                        dataType: 'text',
+                        type: 'post',
+                        contentType: 'application/x-www-form-urlencoded',
+                        data: $(this).serialize(),
+                        success: function (data) {
+                            $('#result h4').html(data);
+                            $('#form02')[0].reset();
+                            $('input').first().focus();;
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log(errorThrown);
+                            $('#result h4').html(errorThrown);
+                        }
+                    });
+
+                    e.preventDefault();
+                }
+
+                $('#form02').submit(form_handle);
+            })($);
+        </script>     
+    
+    </body>
+
+</html>
